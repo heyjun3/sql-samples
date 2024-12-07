@@ -1,12 +1,16 @@
 -- joinでindexを使用することでどれだけ速くなるか確認する。
-CREATE TABLE
-    customer (id UUID PRIMARY KEY, NAME VARCHAR);
+CREATE TABLE customer (id UUID PRIMARY KEY, NAME VARCHAR);
 
-CREATE TABLE
-    orders (id UUID PRIMARY KEY, customer_id UUID, NAME VARCHAR);
+CREATE TABLE orders (
+    id UUID PRIMARY KEY,
+    customer_id UUID,
+    NAME VARCHAR
+);
 
-ALTER TABLE orders
-ADD CONSTRAINT customer_fk FOREIGN KEY (customer_id) REFERENCES customer (id);
+ALTER TABLE
+    orders
+ADD
+    CONSTRAINT customer_fk FOREIGN KEY (customer_id) REFERENCES customer (id);
 
 INSERT INTO
     customer (id, NAME)
@@ -25,11 +29,11 @@ SELECT
 FROM
     customer;
 
-EXPLAIN
-ANALYZE
+EXPLAIN ANALYZE
 SELECT
     *
 FROM
     customer
     INNER JOIN orders ON orders.customer_id = customer.id
-LIMIT 1000000;
+LIMIT
+    1000000;
